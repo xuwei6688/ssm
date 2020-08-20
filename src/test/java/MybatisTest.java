@@ -1,3 +1,5 @@
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.xu.mapper.AccountMapper;
 import com.xu.pojo.Account;
 import org.apache.ibatis.io.Resources;
@@ -71,6 +73,18 @@ public class MybatisTest {
         mapper1.selectById(1);
         System.out.println("***********第二个sqlSession***********");
         mapper2.selectById(1);
+    }
+
+    /**
+     * 分页插件测试
+     */
+    @Test
+    public void test4(){
+        AccountMapper mapper = sqlSession.getMapper(AccountMapper.class);
+        PageHelper.startPage(1, 2);
+        List<Account> accounts = mapper.queryAccountList();
+        PageInfo<Account> pageInfo = new PageInfo<Account>(accounts);
+        System.out.println(pageInfo.getList());
     }
 
 
